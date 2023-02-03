@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Trivia Game</title>
+</head>
+<body class = "mainpagebody">
+    <nav class="navbar navbar-expand-lg bg-dark text-success">
+        <div class="container-fluid">
+          <a class="navbar-brand text-success fs-3" href="#">Hire me I did dis</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-success" href="/createaccount">Create an account</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-success" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Muh Friends</a>
+              </li>
+            </ul>
+            {% if session['user_id'] %}
+            <form action="/logout">
+              <button class="btn btn-outline-success logbutt" type="submit">Logout</button>
+            </form>
+            <h3 class="text-success"> {{ session['username'] }} </h3>
+            {% else %}
+            <form class="d-flex align-items-center" role="login" action="/login" method="POST">
+              {% for message in get_flashed_messages(category_filter = ['log']) %}
+              <p> {{message}} </p>
+              {% endfor %}
+                <button class="btn btn-outline-success logbutt" type="submit">Login</button>
+                <div>
+                    <div class="d-flex">
+                        <label for="jeff" class="nuisance">Email:</label>
+                        <input class="form-control me-2" type="text" name="emaillog" aria-label="E-mail:" >
+                    </div>
+                    <div class="d-flex">
+                        <label for="greg">Password:</label>
+                        <input class="form-control me-2" type="password" name="passwordlog" aria-label="Password:" >
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+      <!-- END OF NAV -->
+      <!-- Pop up Sidebar START -->
+      <div class="offcanvas offcanvas-start text-bg-dark" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="staticBackdropLabel">Fwiendships</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          {% if session['user_id'] %}
+          <h1>You don't have any friends</h1>
+          {% else %}
+          <div>
+            <h1>You Need to have an Account to have friends (in game).</h1>
+            <form action="/createaccount">
+                <button class="btn btn-danger">Create Account</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <!-- Pop up Sidebar END -->
+    <div class="container-md my-5 wrapper bg-dark d-flex align-items-center justify-content-center text-light">
+        <form action="/gamesetup" method="POST">
+        <h1 class = "tainerchild display-1">Trivia Game</h1>
+        <h3 class = "tainerchild">Select Difficulty</h3>
+
+        <div class="d-flex align-items-center justify-content-center tainerchild">
+            <label for="easy" class="difficultycheck" >Easy</label>
+            <input type="radio" name="difficulty" id="difficulty" value="&difficulty=easy" class="dbox">
+            <label for="medium" class="difficultycheck">Medium</label>
+            <input type="radio" name="difficulty" value="&difficulty=medium" id="difficulty" class="dbox">
+            <label for="hard" class="difficultycheck">Hard</label >
+            <input type="radio" name="difficulty" value="&difficulty=hard" id="difficulty" class="dbox">
+            <label for="whatever" class="difficultycheck">Select all</label >
+            <input type="radio" name="difficulty" id="difficulty" value="" checked >
+        </div>
+
+            <h3 class = "tainerchild">Select Category</h3>
+            <div>
+                <select name="category" id="category">
+                    <option value="">All Categories</option>
+                    <option value="&category=9">General Knowledge</option>
+                    <option value="&category=10">Books</option>
+                    <option value="&category=11">Film</option>
+                    <option value="&category=12">Music</option>
+                    <option value="&category=13">Musicals and Theatre</option>
+                    <option value="&category=14">Television</option>
+                    <option value="&category=15">Video Games</option>
+                    <option value="&category=16">Board Games</option>
+                    <option value="&category=17">Science and Nature</option>
+                    <option value="&category=18">Computers</option>
+                    <option value="&category=19">Mathematics</option>
+                    <option value="&category=20">Mythology</option>
+                    <option value="&category=21">Sports</option>
+                    <option value="&category=22">Geography</option>
+                    <option value="&category=23">History</option>
+                    <option value="&category=24">Politics</option>
+                    <option value="&category=25">Art</option>
+                    <option value="&category=26">Celebrities</option>
+                    <option value="&category=27">Animals</option>
+                    <option value="&category=28">Vehicles</option>
+                    <option value="&category=29">Comics</option>
+                    <option value="&category=30">Gadgets</option>
+                    <option value="&category=31">Anime and Manga</option>
+                    <option value="&category=32">Cartoon and animations</option>
+                </select>
+        </div>
+        <h3 class = "tainerchild">How many Questions</h3>
+        {% for message in get_flashed_messages(category_filter = ['questions']) %}
+        <p> {{message}} </p>
+        {% endfor %}
+        <input type="number" name="questions" id="questions" value="5">
+        <div class = "tainerchild">
+            <button class="btn btn-warning">Game On</button>
+        </div>
+    </form>
+    </div>
+    
+    
+
+    <script src="{{ url_for('static', filename='index.js') }}">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</body>
+</html>

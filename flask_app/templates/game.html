@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Trivia Game</title>
+</head>
+<body class="game_background">
+  <nav class="navbar navbar-expand-lg bg-dark text-success">
+    <div class="container-fluid">
+      <a class="navbar-brand text-success fs-3" href="#">Hire me I did dis</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-success" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-success" href="/createaccount">Create an account</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-success" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">Muh Friends</a>
+          </li>
+        </ul>
+        {% if session['user_id'] %}
+        <form action="/logout">
+          <button class="btn btn-outline-success logbutt" type="submit">Logout</button>
+        </form>
+        <h3 class="text-success"> {{ session['username'] }} </h3>
+        {% else %}
+        <form class="d-flex align-items-center" role="login" action="/login" method="POST">
+          {% for message in get_flashed_messages(category_filter = ['log']) %}
+          <p> {{message}} </p>
+          {% endfor %}
+            <button class="btn btn-outline-success logbutt" type="submit">Login</button>
+            <div>
+                <div class="d-flex">
+                    <label for="jeff" class="nuisance">Email:</label>
+                    <input class="form-control me-2" type="text" name="emaillog" aria-label="E-mail:" >
+                </div>
+                <div class="d-flex">
+                    <label for="greg">Password:</label>
+                    <input class="form-control me-2" type="password" name="passwordlog" aria-label="Password:" >
+                </div>
+            </div>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+      <!-- END OF NAV -->
+      <!-- Pop up Sidebar START -->
+      <div class="offcanvas offcanvas-start text-bg-dark" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="staticBackdropLabel">Fwiendships</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          {% if session['user_id'] %}
+          <h1>You don't have any friends</h1>
+          {% else %}
+          <div>
+            <h1>You Need to have an Account to have friends (in game).</h1>
+            <form action="/createaccount">
+                <button class="btn btn-danger">Create Account</button>
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      <!-- Pop up Sidebar END -->
+      <div class="container-md my-5 wrapper bg-dark  text-light gametainer">
+        <p class="text-dark" id="game_setup"> {{session["game_setup"]}} </p>
+        <h1 class="text-warning">Duh Game!</h1>
+        <div id = "questiondiv">
+          
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto" id="where_the_magic_happens">
+          
+        </div>
+        <div id = "admonishment">
+          
+        </div>
+        <div id = "praise_or_humiliation">
+          
+        </div>
+        <form onsubmit="play(event)">
+          <button class="btn btn-light btn-large">Start round</button>
+        </div>
+    </form>
+    <script src="{{ url_for('static', filename='game.js') }}">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</body>
+</html>

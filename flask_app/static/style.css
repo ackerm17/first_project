@@ -1,0 +1,60 @@
+.logbutt{
+    max-height: 50px;
+    margin-right: 20px;
+}
+
+.nuisance{
+    margin-right: 28px;
+}
+
+.difficultycheck{
+    margin: 10px;
+}
+
+.dbox{
+    margin-right: 10px;
+}
+
+.skooch{
+    margin-bottom: 6px;
+}
+
+.skooches{
+    text-align: end;
+    margin-right: 10px;
+}
+
+.wrapper{
+    text-align: center;
+    padding: 5% 2%;
+}
+
+.tainerchild{
+    margin: 5% 0%;
+}
+
+.mainpagebody{
+    background-image: url('resources/main_background.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.game_background{
+    background-image: url('resources/game_background2.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.questionanswers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.gametainer{
+    min-height: 750px;
+    padding: 0% 10%;
+}
